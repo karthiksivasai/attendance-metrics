@@ -7,6 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { ResultCard } from './ResultCard';
 import { ComponentPercentage, Component, calculateAttendance, getAttendanceStatus, getComponentLabel } from '@/utils/calculatorUtils';
 import { cn } from '@/lib/utils';
+import { PartyPopper } from 'lucide-react';
 
 const DEFAULT_COMPONENTS: ComponentPercentage[] = [
   { component: 'L', percentage: 85, enabled: true },
@@ -20,6 +21,7 @@ export const AttendanceCalculator = () => {
   const [attendance, setAttendance] = useState<number>(85);
   const [isCalculating, setIsCalculating] = useState(false);
   const [inputValues, setInputValues] = useState<string[]>(DEFAULT_COMPONENTS.map(c => c.percentage.toString()));
+  const [showCelebration, setShowCelebration] = useState(false);
 
   useEffect(() => {
     if (isCalculating) {
@@ -29,9 +31,27 @@ export const AttendanceCalculator = () => {
     // Calculate the attendance based on enabled components
     const calculatedAttendance = calculateAttendance(components);
     setAttendance(calculatedAttendance);
+    
+    // Check if status is 'promoted' to show celebration
+    const status = getAttendanceStatus(calculatedAttendance);
+    if (status === 'promoted' && calculatedAttendance > 85) {
+      setShowCelebration(true);
+      
+      // Hide celebration after 3 seconds
+      const timer = setTimeout(() => {
+        setShowCelebration(false);
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
   }, [components, isCalculating]);
 
   const handlePercentageChange = (index: number, value: string) => {
+    // Only allow numbers (empty string is also allowed for backspace)
+    if (value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return;
+    }
+    
     // Update the input value first
     setInputValues(prev => {
       const newInputValues = [...prev];
@@ -75,6 +95,14 @@ export const AttendanceCalculator = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto space-y-8 section-fade-in">
+      {showCelebration && (
+        <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
+          <div className="animate-bounce">
+            <PartyPopper className="h-24 w-24 text-promoted animate-scale-in" />
+          </div>
+        </div>
+      )}
+      
       <Card className="glass-card">
         <CardHeader className="pb-4">
           <CardTitle className="text-center">Attendance Calculator</CardTitle>
@@ -115,6 +143,7 @@ export const AttendanceCalculator = () => {
                         <Input
                           id={`percentage-${component.component}`}
                           type="text"
+                          inputMode="decimal"
                           value={inputValues[index]}
                           onChange={(e) => handlePercentageChange(index, e.target.value)}
                           disabled={!component.enabled}
