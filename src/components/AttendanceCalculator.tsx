@@ -19,6 +19,7 @@ export const AttendanceCalculator = () => {
   const [components, setComponents] = useState<ComponentPercentage[]>(DEFAULT_COMPONENTS);
   const [attendance, setAttendance] = useState<number>(85);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [inputValues, setInputValues] = useState<string[]>(DEFAULT_COMPONENTS.map(c => c.percentage.toString()));
 
   useEffect(() => {
     if (isCalculating) {
@@ -31,6 +32,19 @@ export const AttendanceCalculator = () => {
   }, [components, isCalculating]);
 
   const handlePercentageChange = (index: number, value: string) => {
+    // Update the input value first
+    setInputValues(prev => {
+      const newInputValues = [...prev];
+      newInputValues[index] = value;
+      return newInputValues;
+    });
+    
+    // Only update the component if the value is valid
+    if (value === '') {
+      // When the field is empty, don't update the component yet
+      return;
+    }
+    
     const newValue = parseFloat(value);
     
     if (isNaN(newValue) || newValue < 0 || newValue > 100) {
@@ -100,16 +114,24 @@ export const AttendanceCalculator = () => {
                       <div className="relative">
                         <Input
                           id={`percentage-${component.component}`}
-                          type="number"
-                          min="0"
-                          max="100"
-                          value={component.percentage}
+                          type="text"
+                          value={inputValues[index]}
                           onChange={(e) => handlePercentageChange(index, e.target.value)}
                           disabled={!component.enabled}
                           className={cn(
                             "pr-8 h-10 transition-opacity duration-200",
                             !component.enabled && "opacity-50"
                           )}
+                          onBlur={() => {
+                            // If the field is empty when user leaves it, reset to the last valid value
+                            if (inputValues[index] === '') {
+                              setInputValues(prev => {
+                                const newInputValues = [...prev];
+                                newInputValues[index] = component.percentage.toString();
+                                return newInputValues;
+                              });
+                            }
+                          }}
                         />
                         <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                           <span className="text-sm text-muted-foreground">%</span>
