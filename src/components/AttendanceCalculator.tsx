@@ -8,6 +8,7 @@ import { ResultCard } from './ResultCard';
 import { ComponentPercentage, Component, calculateAttendance, getAttendanceStatus, getComponentLabel } from '@/utils/calculatorUtils';
 import { cn } from '@/lib/utils';
 import { PartyPopper } from 'lucide-react';
+import { EmojiConfetti } from './EmojiConfetti';
 
 const DEFAULT_COMPONENTS: ComponentPercentage[] = [
   { component: 'L', percentage: 85, enabled: true },
@@ -22,6 +23,7 @@ export const AttendanceCalculator = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [inputValues, setInputValues] = useState<string[]>(DEFAULT_COMPONENTS.map(c => c.percentage.toString()));
   const [showCelebration, setShowCelebration] = useState(false);
+  const [confettiType, setConfettiType] = useState<'celebrate' | 'sad' | null>(null);
 
   useEffect(() => {
     if (isCalculating) {
@@ -32,15 +34,29 @@ export const AttendanceCalculator = () => {
     const calculatedAttendance = calculateAttendance(components);
     setAttendance(calculatedAttendance);
     
-    // Check if status is 'promoted' to show celebration
+    // Check status to show appropriate celebration
     const status = getAttendanceStatus(calculatedAttendance);
+    
     if (status === 'promoted' && calculatedAttendance > 85) {
       setShowCelebration(true);
+      setConfettiType('celebrate');
       
-      // Hide celebration after 3 seconds
+      // Hide celebration after 5 seconds
       const timer = setTimeout(() => {
         setShowCelebration(false);
-      }, 3000);
+        setConfettiType(null);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    } else if (status === 'detained') {
+      setShowCelebration(true);
+      setConfettiType('sad');
+      
+      // Hide celebration after 5 seconds
+      const timer = setTimeout(() => {
+        setShowCelebration(false);
+        setConfettiType(null);
+      }, 5000);
       
       return () => clearTimeout(timer);
     }
@@ -95,12 +111,8 @@ export const AttendanceCalculator = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto space-y-8 section-fade-in">
-      {showCelebration && (
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
-          <div className="animate-bounce">
-            <PartyPopper className="h-24 w-24 text-promoted animate-scale-in" />
-          </div>
-        </div>
+      {showCelebration && confettiType && (
+        <EmojiConfetti type={confettiType} />
       )}
       
       <Card className="glass-card">

@@ -155,4 +155,19 @@
       transform: translateY(0);
     }
   }
+  
+  /* Add new fall animation for emoji confetti */
+  @keyframes fall {
+    0% {
+      transform: translateY(-50px) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(calc(100vh + 50px)) rotate(360deg);
+      opacity: 0;
+    }
+  }
 }
