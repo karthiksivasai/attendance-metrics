@@ -11,6 +11,7 @@ interface ImprovementMessageProps {
 }
 
 export const ImprovementMessage = ({ attendance, status, className }: ImprovementMessageProps) => {
+  const lostPercentage = Math.round((100 - attendance) * 10) / 10;
   const requiredPercentage = Math.max(0, Math.round((85 - attendance) * 10) / 10);
   
   const renderMessage = () => {
@@ -21,7 +22,7 @@ export const ImprovementMessage = ({ attendance, status, className }: Improvemen
             <AlertCircle className="h-5 w-5 text-detained" />
             <AlertTitle className="text-detained font-semibold">Attendance Improvement Needed</AlertTitle>
             <AlertDescription className="mt-2 space-y-2">
-              <p>❌ Your current attendance is critically low.</p>
+              <p>❌ Your current attendance is critically low ({lostPercentage}% lost so far).</p>
               <p>🚨 To get promoted, you need to increase your attendance by {requiredPercentage}%.</p>
             </AlertDescription>
           </Alert>
@@ -32,7 +33,7 @@ export const ImprovementMessage = ({ attendance, status, className }: Improvemen
             <AlertTriangle className="h-5 w-5 text-condonation" />
             <AlertTitle className="text-condonation font-semibold">Almost There!</AlertTitle>
             <AlertDescription className="mt-2 space-y-2">
-              <p>⚠️ Your attendance requires a little improvement.</p>
+              <p>⚠️ Your attendance requires a little improvement ({lostPercentage}% lost so far).</p>
               <p>🏆 You need just {requiredPercentage}% more to get promoted!</p>
             </AlertDescription>
           </Alert>
@@ -43,7 +44,7 @@ export const ImprovementMessage = ({ attendance, status, className }: Improvemen
             <CheckCircle className="h-5 w-5 text-promoted" />
             <AlertTitle className="text-promoted font-semibold">Great Job!</AlertTitle>
             <AlertDescription className="mt-2 space-y-2">
-              <p>✅ Your attendance is excellent!</p>
+              <p>✅ Your attendance is excellent! (Only {lostPercentage}% lost so far)</p>
               <p>🎉 Congratulations! You are promoted.</p>
             </AlertDescription>
           </Alert>
