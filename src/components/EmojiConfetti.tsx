@@ -19,14 +19,16 @@ interface EmojiParticle {
 export const EmojiConfetti = ({ type }: EmojiConfettiProps) => {
   const [particles, setParticles] = useState<EmojiParticle[]>([]);
   
-  // Define emojis for each type
+  // Define emojis for celebration only
   const celebrationEmojis = ['🎉', '🎊', '🥳', '✨', '🎈', '🎇', '🎆', '🏆', '👏', '💯'];
-  const sadEmojis = ['😢', '😭', '😔', '😞', '💔', '🤦‍♂️', '🤦‍♀️', '😓', '😥', '😰'];
   
   useEffect(() => {
     // Create 50 emoji particles falling from the top
     const newParticles: EmojiParticle[] = [];
-    const emojis = type === 'celebrate' ? celebrationEmojis : sadEmojis;
+    
+    // Only show celebration emojis regardless of type
+    // This effectively removes the sad emojis as requested
+    const emojis = celebrationEmojis;
     
     for (let i = 0; i < 50; i++) {
       newParticles.push({

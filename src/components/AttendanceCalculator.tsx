@@ -48,23 +48,27 @@ export const AttendanceCalculator = () => {
       }, 5000);
       
       return () => clearTimeout(timer);
-    } else if (status === 'detained') {
-      setShowCelebration(true);
-      setConfettiType('sad');
-      
-      // Hide celebration after 5 seconds
-      const timer = setTimeout(() => {
-        setShowCelebration(false);
-        setConfettiType(null);
-      }, 5000);
-      
-      return () => clearTimeout(timer);
     }
   }, [components, isCalculating]);
 
   const handlePercentageChange = (index: number, value: string) => {
     // Only allow numbers (empty string is also allowed for backspace)
     if (value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return;
+    }
+    
+    // Limit to max 3 digits (0-100)
+    if (value !== '' && value !== '.' && parseFloat(value) > 100) {
+      return;
+    }
+    
+    // Limit to 3 characters total (including decimal point)
+    if (value.length > 3 && !value.includes('.')) {
+      return;
+    }
+
+    // Limit to 5 characters if it includes a decimal (e.g., 99.9)
+    if (value.includes('.') && value.length > 5) {
       return;
     }
     
@@ -163,6 +167,7 @@ export const AttendanceCalculator = () => {
                             "pr-8 h-10 transition-opacity duration-200",
                             !component.enabled && "opacity-50"
                           )}
+                          maxLength={5}
                           onBlur={() => {
                             // If the field is empty when user leaves it, reset to the last valid value
                             if (inputValues[index] === '') {
