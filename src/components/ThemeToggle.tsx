@@ -3,6 +3,7 @@ import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
+import { Switch } from './ui/switch';
 
 interface ThemeToggleProps {
   className?: string;
@@ -10,24 +11,23 @@ interface ThemeToggleProps {
 
 export const ThemeToggle = ({ className }: ThemeToggleProps) => {
   const { theme, toggleTheme } = useTheme();
+  const isLight = theme === 'light';
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-      className={cn(
-        'rounded-full w-10 h-10 transition-all duration-300 ease-spring',
-        className
-      )}
-      aria-label="Toggle theme"
-    >
-      {theme === 'light' ? (
-        <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      ) : (
-        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      )}
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+    <div className={cn('flex items-center gap-2', className)}>
+      <Sun className={cn("h-[1.2rem] w-[1.2rem] transition-all", 
+        isLight ? "text-primary" : "text-muted-foreground"
+      )} />
+      
+      <Switch
+        checked={!isLight}
+        onCheckedChange={toggleTheme}
+        aria-label="Toggle theme"
+      />
+      
+      <Moon className={cn("h-[1.2rem] w-[1.2rem] transition-all", 
+        !isLight ? "text-primary" : "text-muted-foreground"
+      )} />
+    </div>
   );
 };

@@ -4,8 +4,18 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { ThemeProvider } from '@/hooks/useTheme';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, BarChart, CheckCircle, History } from 'lucide-react';
+import { useRef } from 'react';
 
 const Index = () => {
+  const calculatorRef = useRef<HTMLDivElement>(null);
+
+  const scrollToCalculator = () => {
+    calculatorRef.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
   return (
     <ThemeProvider>
       <div className="min-h-screen w-full flex flex-col bg-background transition-colors duration-300">
@@ -38,12 +48,14 @@ const Index = () => {
                 <p className="text-lg text-muted-foreground max-w-2xl">
                   Stay on top of your classes with our easy-to-use attendance calculator. Never worry about attendance shortage again.
                 </p>
-                <Button size="lg" className="mt-4 group">
+                <Button size="lg" className="mt-4 group" onClick={scrollToCalculator}>
                   Calculate Now <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>
               
-              <AttendanceCalculator />
+              <div ref={calculatorRef}>
+                <AttendanceCalculator />
+              </div>
               
               <div className="mt-20 w-full max-w-xl space-y-8 animate-fade-in">
                 <h2 className="text-2xl font-bold text-center">Why Use Our Calculator?</h2>
