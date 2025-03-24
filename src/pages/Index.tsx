@@ -1,5 +1,5 @@
 
-import AttendanceCalculator from '@/components/AttendanceCalculator';
+import { AttendanceCalculator } from '@/components/AttendanceCalculator';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ThemeProvider } from '@/hooks/useTheme';
 import { Button } from '@/components/ui/button';
