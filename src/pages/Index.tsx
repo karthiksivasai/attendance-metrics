@@ -1,10 +1,9 @@
-
+import React, { useRef } from 'react';
 import { AttendanceCalculator } from '@/components/AttendanceCalculator';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ThemeProvider } from '@/hooks/useTheme';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, BarChart, CheckCircle, History, Star } from 'lucide-react';
-import { useRef } from 'react';
 import { UserMenu } from '@/components/UserMenu';
 import { Link } from 'react-router-dom';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -24,7 +23,6 @@ const Index = () => {
   return (
     <ThemeProvider>
       <div className="min-h-screen w-full flex flex-col bg-background transition-colors duration-300">
-        {/* Header */}
         <header className="sticky top-0 z-10 w-full border-b bg-background/80 backdrop-blur-md">
           <div className="container flex h-16 items-center justify-between">
             <div className="flex items-center gap-6">
@@ -48,7 +46,6 @@ const Index = () => {
           </div>
         </header>
 
-        {/* Main content */}
         <main className="flex-1">
           <section className="w-full py-12 md:py-24 lg:py-32">
             <div className="container px-4 md:px-6 space-y-10 md:space-y-16">
@@ -69,7 +66,6 @@ const Index = () => {
                 <AttendanceCalculator />
               </div>
               
-              {/* Redesigned Features Section */}
               <div className="mt-20 w-full max-w-6xl mx-auto space-y-8">
                 <h2 className="text-2xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
                   Why Use Our Calculator?
@@ -121,7 +117,6 @@ const Index = () => {
             </div>
           </section>
           
-          {/* Redesigned Testimonials Section */}
           <section className="bg-muted/50 py-16 md:py-24">
             <div className="container px-4 md:px-6">
               <h2 className="text-2xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
@@ -183,7 +178,6 @@ const Index = () => {
           </section>
         </main>
 
-        {/* Footer */}
         <footer className="w-full py-6 md:py-8 border-t">
           <div className="container px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
