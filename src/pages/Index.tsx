@@ -1,10 +1,12 @@
 
-import { AttendanceCalculator } from '@/components/AttendanceCalculator';
+import AttendanceCalculator from '@/components/AttendanceCalculator';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ThemeProvider } from '@/hooks/useTheme';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, BarChart, CheckCircle, History } from 'lucide-react';
 import { useRef } from 'react';
+import { UserMenu } from '@/components/UserMenu';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const calculatorRef = useRef<HTMLDivElement>(null);
@@ -19,31 +21,38 @@ const Index = () => {
   return (
     <ThemeProvider>
       <div className="min-h-screen w-full flex flex-col bg-background transition-colors duration-300">
-        <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border/40">
-          <nav className="w-full max-w-6xl mx-auto flex justify-between items-center py-4 px-4">
-            <div className="flex items-center">
-              <BarChart className="mr-2 h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">Attendance Tracker</h2>
+        {/* Header */}
+        <header className="sticky top-0 z-10 w-full border-b bg-background/80 backdrop-blur-md">
+          <div className="container flex h-16 items-center justify-between">
+            <div className="flex items-center gap-6">
+              <Link to="/" className="flex items-center gap-2 font-bold text-xl">
+                <BarChart className="h-5 w-5" />
+                AttendTracker
+              </Link>
+              <nav className="hidden md:flex gap-6">
+                <Link to="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                  About
+                </Link>
+                <Link to="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                  Contact
+                </Link>
+              </nav>
             </div>
-            <div className="hidden md:flex items-center gap-6">
-              <a href="/" className="relative hover:text-primary transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100">Home</a>
-              <a href="/about" className="relative hover:text-primary transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100">About</a>
-              <a href="/contact" className="relative hover:text-primary transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100">Contact</a>
-              <a href="/blog" className="relative hover:text-primary transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100">Blog</a>
+            <div className="flex items-center gap-4">
               <ThemeToggle />
+              <UserMenu />
             </div>
-            <div className="md:hidden flex items-center">
-              <ThemeToggle />
-            </div>
-          </nav>
+          </div>
         </header>
-        
+
+        {/* Main content */}
         <main className="flex-1">
-          <section className="py-16 px-4">
-            <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
-              <div className="text-center mb-12 space-y-4 animate-fade-in">
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                  Track Your Attendance
+          <section className="w-full py-12 md:py-24 lg:py-32">
+            <div className="container px-4 md:px-6 space-y-10 md:space-y-16">
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  Track Your Attendance. <br className="hidden sm:inline" />
+                  Stay on Top of Your Classes.
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-2xl">
                   Stay on top of your classes with our easy-to-use attendance calculator. Never worry about attendance shortage again.
@@ -59,90 +68,113 @@ const Index = () => {
               
               <div className="mt-20 w-full max-w-xl space-y-8 animate-fade-in">
                 <h2 className="text-2xl font-bold text-center">Why Use Our Calculator?</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                  <div className="p-6 rounded-lg bg-card/60 backdrop-blur-sm border border-border/50 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]">
-                    <div className="bg-primary/10 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="flex flex-col items-center text-center p-4">
+                    <div className="rounded-full bg-primary/10 p-3 mb-4">
                       <CheckCircle className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="font-medium text-lg mb-2">Accurate Calculation</h3>
-                    <p className="text-sm text-muted-foreground">Get precise calculations based on your institution's policies.</p>
+                    <h3 className="text-lg font-semibold">Accurate Calculation</h3>
+                    <p className="text-sm text-muted-foreground">Get precise attendance percentage calculations</p>
                   </div>
-                  <div className="p-6 rounded-lg bg-card/60 backdrop-blur-sm border border-border/50 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]">
-                    <div className="bg-primary/10 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                      <BarChart className="h-6 w-6 text-primary" />
-                    </div>
-                    <h3 className="font-medium text-lg mb-2">Visual Progress</h3>
-                    <p className="text-sm text-muted-foreground">Track your attendance visually with our interactive dashboard.</p>
-                  </div>
-                  <div className="p-6 rounded-lg bg-card/60 backdrop-blur-sm border border-border/50 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]">
-                    <div className="bg-primary/10 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <div className="flex flex-col items-center text-center p-4">
+                    <div className="rounded-full bg-primary/10 p-3 mb-4">
                       <History className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="font-medium text-lg mb-2">Multiple Components</h3>
-                    <p className="text-sm text-muted-foreground">Calculate for lectures, tutorials, practicals, and skills.</p>
+                    <h3 className="text-lg font-semibold">Track Progress</h3>
+                    <p className="text-sm text-muted-foreground">Monitor your attendance over time</p>
                   </div>
-                </div>
-                
-                <div className="flex justify-center mt-8">
-                  <Button asChild variant="outline" className="px-8 py-6 text-lg font-medium">
-                    <a href="/about">Learn More About Attendance</a>
-                  </Button>
+                  <div className="flex flex-col items-center text-center p-4">
+                    <div className="rounded-full bg-primary/10 p-3 mb-4">
+                      <BarChart className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold">Visual Reports</h3>
+                    <p className="text-sm text-muted-foreground">See your attendance data visualized</p>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
           
-          <section className="py-12 px-4 bg-secondary/30">
-            <div className="w-full max-w-3xl mx-auto text-center space-y-6">
-              <h2 className="text-2xl font-bold">What Students Say</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div className="p-6 rounded-lg bg-card shadow-sm">
-                  <p className="text-muted-foreground italic mb-4">"This calculator helped me track my attendance and avoid detention. Simple yet powerful!"</p>
-                  <p className="font-medium">— Rahul K.</p>
+          {/* Testimonials */}
+          <section className="bg-muted py-12 md:py-20">
+            <div className="container px-4 md:px-6">
+              <h2 className="text-2xl font-bold text-center mb-10">What Our Users Say</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-card p-6 rounded-lg shadow-sm">
+                  <p className="italic text-muted-foreground mb-4">"This calculator saved me from attendance trouble. I always know exactly where I stand now."</p>
+                  <p className="font-semibold">- Sarah K.</p>
                 </div>
-                <div className="p-6 rounded-lg bg-card shadow-sm">
-                  <p className="text-muted-foreground italic mb-4">"I love how I can see exactly how much attendance I need to maintain to stay promoted."</p>
-                  <p className="font-medium">— Priya S.</p>
+                <div className="bg-card p-6 rounded-lg shadow-sm">
+                  <p className="italic text-muted-foreground mb-4">"So easy to use and super helpful for keeping track of all my classes."</p>
+                  <p className="font-semibold">- James L.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg shadow-sm">
+                  <p className="italic text-muted-foreground mb-4">"I recommend this to all my classmates. It's become essential for our attendance tracking."</p>
+                  <p className="font-semibold">- Mia T.</p>
                 </div>
               </div>
             </div>
           </section>
         </main>
-        
-        <footer className="bg-secondary/50 border-t border-border/40 py-8 px-4">
-          <div className="w-full max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-              <div>
-                <h3 className="font-bold text-lg mb-4">Attendance Calculator</h3>
-                <p className="text-sm text-muted-foreground">
-                  The easiest way to track and calculate your college attendance.
-                </p>
+
+        {/* Footer */}
+        <footer className="w-full py-6 md:py-8 border-t">
+          <div className="container px-4 md:px-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="space-y-3">
+                <h3 className="text-lg font-semibold">AttendTracker</h3>
+                <p className="text-sm text-muted-foreground">Stay on top of your attendance with ease.</p>
               </div>
-              <div>
-                <h3 className="font-semibold mb-4">Resources</h3>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
-                  <li><a href="/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</a></li>
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold">Pages</h4>
+                <ul className="space-y-2">
+                  <li>
+                    <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground">About</Link>
+                  </li>
+                  <li>
+                    <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</Link>
+                  </li>
                 </ul>
               </div>
-              <div>
-                <h3 className="font-semibold mb-4">Legal</h3>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="/privacy" className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a></li>
-                  <li><a href="/terms" className="text-muted-foreground hover:text-primary transition-colors">Terms of Service</a></li>
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold">Legal</h4>
+                <ul className="space-y-2">
+                  <li>
+                    <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</Link>
+                  </li>
+                  <li>
+                    <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</Link>
+                  </li>
                 </ul>
               </div>
-              <div>
-                <h3 className="font-semibold mb-4">Contact</h3>
-                <a href="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact Us</a>
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold">Connect</h4>
+                <div className="flex space-x-3">
+                  <a href="#" className="text-muted-foreground hover:text-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
+                  </a>
+                  <a href="#" className="text-muted-foreground hover:text-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                    </svg>
+                  </a>
+                  <a href="#" className="text-muted-foreground hover:text-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
-            <div className="border-t border-border/40 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-              <p>© {new Date().getFullYear()} Attendance Calculator. All rights reserved.</p>
-              <div className="flex gap-4 mt-4 md:mt-0">
-                <a href="/privacy" className="hover:text-primary transition-colors">Privacy</a>
-                <a href="/terms" className="hover:text-primary transition-colors">Terms</a>
-              </div>
+            <div className="mt-6 text-center text-sm text-muted-foreground">
+              © {new Date().getFullYear()} AttendTracker. All rights reserved.
             </div>
           </div>
         </footer>
