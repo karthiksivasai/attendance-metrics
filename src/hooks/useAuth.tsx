@@ -1,11 +1,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-
-type User = {
-  id: string;
-  email: string;
-  name?: string;
-};
+import { authService, User } from '@/services/authService';
+import { toast } from '@/hooks/use-toast';
 
 type AuthContextType = {
   user: User | null;
@@ -23,29 +19,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Check if user is already logged in
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = authService.getCurrentUser();
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      setUser(storedUser);
     }
     setLoading(false);
   }, []);
 
-  // In a real app, this would be an API call to your backend
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real app, you'd validate credentials with your API
-      // For demo purposes, we'll just create a user object
-      const newUser = {
-        id: Math.random().toString(36).substr(2, 9),
-        email,
-      };
-      
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
+      const response = await authService.login(email, password);
+      setUser(response.user);
+      toast({
+        title: 'Login successful',
+        description: `Welcome back, ${response.user.name || response.user.email}!`,
+      });
+    } catch (error) {
+      let errorMessage = 'Failed to login';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      toast({
+        title: 'Login failed',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -54,26 +54,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signup = async (name: string, email: string, password: string) => {
     setLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real app, you'd create a user in your database
-      const newUser = {
-        id: Math.random().toString(36).substr(2, 9),
-        email,
-        name,
-      };
-      
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
+      const response = await authService.signup(name, email, password);
+      setUser(response.user);
+      toast({
+        title: 'Account created',
+        description: `Welcome, ${response.user.name}!`,
+      });
+    } catch (error) {
+      let errorMessage = 'Failed to create account';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      toast({
+        title: 'Signup failed',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
   const logout = () => {
+    authService.logout();
     setUser(null);
-    localStorage.removeItem('user');
+    toast({
+      title: 'Logged out',
+      description: 'You have been successfully logged out.',
+    });
   };
 
   return (
