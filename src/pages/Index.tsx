@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { AttendanceCalculator } from '@/components/AttendanceCalculator';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -50,14 +51,19 @@ const Index = () => {
           <section className="w-full py-12 md:py-24 lg:py-32">
             <div className="container px-4 md:px-6 space-y-10 md:space-y-16">
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Track Your Attendance. <br className="hidden sm:inline" />
-                  Stay on Top of Your Classes.
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none overflow-hidden">
+                  <span className="inline-block animate-slide-down opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+                    Track Your Attendance.
+                  </span>{' '}
+                  <br className="hidden sm:inline" />
+                  <span className="inline-block animate-slide-down opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
+                    Stay on Top of Your Classes.
+                  </span>
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-2xl">
+                <p className="text-lg text-muted-foreground max-w-2xl animate-fade-in opacity-0" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
                   Stay on top of your classes with our easy-to-use attendance calculator. Never worry about attendance shortage again.
                 </p>
-                <Button size="lg" className="mt-4 group" onClick={scrollToCalculator}>
+                <Button size="lg" className="mt-4 group animate-scale-in opacity-0" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }} onClick={scrollToCalculator}>
                   Calculate Now <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>
