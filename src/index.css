@@ -234,4 +234,38 @@
   .lightning-1, .lightning-2, .lightning-3, .lightning-4 {
     display: none;
   }
+  
+  /* Modern text animation - clean, subtle, professional */
+  .modern-text-animation {
+    background: linear-gradient(90deg, #ffffff, #9b87f5, #d3e4fd, #ffffff);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: subtleGradient 8s ease infinite, subtlePulse 4s ease-in-out infinite;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    position: relative;
+  }
+}
+
+@keyframes subtleGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 1;
+  }
 }
