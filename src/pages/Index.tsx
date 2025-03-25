@@ -51,14 +51,22 @@ const Index = () => {
           <section className="w-full py-12 md:py-24 lg:py-32">
             <div className="container px-4 md:px-6 space-y-10 md:space-y-16">
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none overflow-hidden">
-                  <span className="inline-block animate-slide-down opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-                    Track Your Attendance.
-                  </span>{' '}
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none overflow-visible mb-4">
+                  <div className="electrified-text">
+                    <span className="main-text">Track Your Attendance.</span>
+                    <span className="lightning lightning-1"></span>
+                    <span className="lightning lightning-2"></span>
+                    <span className="glow">Track Your Attendance.</span>
+                    <span className="flicker">Track Your Attendance.</span>
+                  </div>
                   <br className="hidden sm:inline" />
-                  <span className="inline-block animate-slide-down opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
-                    Stay on Top of Your Classes.
-                  </span>
+                  <div className="electrified-text mt-2">
+                    <span className="main-text">Stay on Top of Your Classes.</span>
+                    <span className="lightning lightning-3"></span>
+                    <span className="lightning lightning-4"></span>
+                    <span className="glow">Stay on Top of Your Classes.</span>
+                    <span className="flicker">Stay on Top of Your Classes.</span>
+                  </div>
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-2xl animate-fade-in opacity-0" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
                   Stay on top of your classes with our easy-to-use attendance calculator. Never worry about attendance shortage again.
