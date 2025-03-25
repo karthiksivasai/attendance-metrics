@@ -2,6 +2,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,11 +16,16 @@ import { User, LogOut, Settings } from 'lucide-react';
 export function UserMenu() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   if (!user) {
     return (
-      <Button onClick={() => navigate('/auth')}>
-        Login / Sign up
+      <Button 
+        onClick={() => navigate('/auth')}
+        size={isMobile ? "sm" : "default"}
+        className="whitespace-nowrap"
+      >
+        {isMobile ? "Login" : "Login / Sign up"}
       </Button>
     );
   }
