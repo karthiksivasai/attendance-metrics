@@ -5,7 +5,7 @@ import { StatusBadge } from './StatusBadge';
 import { cn } from '@/lib/utils';
 import { AttendanceStatus } from '@/utils/calculatorUtils';
 import { ImprovementMessage } from './ImprovementMessage';
-import { Progress } from './ui/progress';
+import { Progress } from '@/components/ui/progress';
 
 interface ResultCardProps {
   attendance: number;
