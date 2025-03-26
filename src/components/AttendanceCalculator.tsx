@@ -18,20 +18,20 @@ export const AttendanceCalculator = () => {
   } = useAttendanceCalculator();
 
   return (
-    <div className="w-full max-w-3xl mx-auto space-y-8 section-fade-in">
+    <div className="w-full max-w-xl mx-auto space-y-6 section-fade-in">
       {showCelebration && confettiType && (
         <EmojiConfetti type={confettiType} />
       )}
       
-      <Card className="glass-card">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-center">Attendance Calculator</CardTitle>
-          <CardDescription className="text-center">
-            Enter your attendance percentages for each component
+      <Card className="overflow-hidden border-0 shadow-sm">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl text-center">Attendance Calculator</CardTitle>
+          <CardDescription className="text-center text-xs">
+            Toggle components and set percentages
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          <div className="space-y-2">
             {components.map((component, index) => (
               <AttendanceInputRow
                 key={component.component}
