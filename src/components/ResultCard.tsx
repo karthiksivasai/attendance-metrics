@@ -5,6 +5,7 @@ import { StatusBadge } from './StatusBadge';
 import { cn } from '@/lib/utils';
 import { AttendanceStatus } from '@/utils/calculatorUtils';
 import { ImprovementMessage } from './ImprovementMessage';
+import { Progress } from './ui/progress';
 
 interface ResultCardProps {
   attendance: number;
@@ -13,8 +14,6 @@ interface ResultCardProps {
 }
 
 export const ResultCard = ({ attendance, status, className }: ResultCardProps) => {
-  const progressWidth = `${Math.min(100, attendance)}%`;
-
   return (
     <div className="w-full space-y-4">
       <Card className={cn('w-full overflow-hidden glass-card animate-scale-in', className)}>
@@ -38,20 +37,15 @@ export const ResultCard = ({ attendance, status, className }: ResultCardProps) =
             </div>
 
             <div className="relative pt-1">
-              <div className="overflow-hidden h-2 text-xs flex rounded-full bg-secondary">
-                <div 
-                  className={cn(
-                    "shadow-none flex flex-col text-center whitespace-nowrap justify-center transition-all duration-700 ease-out",
-                    status === 'promoted' && 'bg-promoted',
-                    status === 'condonation' && 'bg-condonation',
-                    status === 'detained' && 'bg-detained'
-                  )}
-                  style={{ 
-                    width: progressWidth,
-                    '--progress-width': progressWidth 
-                  } as React.CSSProperties}
-                ></div>
-              </div>
+              <Progress 
+                value={Math.min(100, attendance)}
+                className={cn(
+                  "h-2 w-full",
+                  status === 'promoted' && "bg-secondary [&>div]:bg-promoted",
+                  status === 'condonation' && "bg-secondary [&>div]:bg-condonation",
+                  status === 'detained' && "bg-secondary [&>div]:bg-detained"
+                )}
+              />
               <div className="flex justify-between mt-1 text-xs text-muted-foreground">
                 <div>0%</div>
                 <div>75%</div>
