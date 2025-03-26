@@ -22,23 +22,18 @@ const Index = () => {
     <ThemeProvider>
       <div className="min-h-screen w-full flex flex-col bg-background transition-colors duration-300">
         <Header />
-
         <main className="flex-1">
           <section className="w-full py-12 md:py-24 lg:py-32">
             <div className="container px-4 md:px-6 space-y-10 md:space-y-16">
               <HeroSection scrollToCalculator={scrollToCalculator} />
-              
               <div ref={calculatorRef}>
                 <AttendanceCalculator />
               </div>
-              
               <FeaturesSection />
             </div>
           </section>
-          
           <TestimonialsSection />
         </main>
-
         <Footer />
       </div>
     </ThemeProvider>
