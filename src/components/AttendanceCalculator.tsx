@@ -31,7 +31,7 @@ export const AttendanceCalculator = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-6">
+          <div className="grid gap-4">
             {components.map((component, index) => (
               <AttendanceInputRow
                 key={component.component}
