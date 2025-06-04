@@ -2,7 +2,7 @@
 
 Attendance Metrics is a lightweight, easy-to-use system built to help students and faculty manage, track, and visualize attendance data. It enables efficient attendance logging, automatic percentage calculation, and warning generation for low attendance — making academic tracking more transparent and streamlined.
 
-## 🚀 Features
+ Features
 
 - Add, update, and delete subjects
 - Mark daily attendance (present/absent)
@@ -11,14 +11,14 @@ Attendance Metrics is a lightweight, easy-to-use system built to help students a
 - Responsive UI for desktop and mobile (if applicable)
 - Option to export or backup data (CSV or database)
 
-## 🛠️ Tech Stack
+ Tech Stack
 
 - **Frontend**: React + Tailwind CSS (optional)
 - **Backend**: Node.js + Express
 - **Database**: Supabase (PostgreSQL)
 - **Others**: Socket.IO (if real-time updates), Redux (if state management used)
 
-## 📦 Project Structure
+ Project Structure
 
 ```bash
 attendance-metrics/
